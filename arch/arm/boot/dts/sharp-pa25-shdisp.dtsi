@@ -1,0 +1,59 @@
+/* Copyright (c) 2012-2013, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/include/ "sharp-shdisp-ir2e71y6.dtsi"
+/include/ "sharp-shdisp-dsi-panel-carin-720p-video.dtsi"
+/include/ "sharp-shdisp-carin.dtsi"
+
+
+&soc {
+	sharp,shdisp_ir2e71y6 {
+		status = "ok";
+	};
+
+	sharp,shdisp_carin_irq {
+		status = "ok";
+	};
+};
+
+&mdss_mdp {
+	qcom,mdss-pref-prim-intf = "dsi";
+};
+
+&mdss_fb0 {
+	qcom,memory-reservation-size = <0x800000>;
+};
+
+&dsi_shdisp_carin {
+	status = "ok";
+
+	qcom,mdss-pan-physical-width-dimension = <63>;
+	qcom,mdss-pan-physical-height-dimension = <112>;
+};
+
+&mdss_dsi0 {
+	qcom,dsi-pref-prim-pan=<&dsi_shdisp_carin>;
+
+	/delete-property/ vdd-supply;
+	/delete-property/ qcom,platform-reset-gpio;
+	/delete-property/ qcom,platform-enable-gpio;
+
+	/delete-node/ qcom,platform-supply-entry1;
+};
+
+&soc {
+	mdss_mdp: qcom,mdss_mdp@fd900000 {
+		mdss_fb0: qcom,mdss_fb_primary {
+			qcom,memblock-reserve = <0x10000000 0x01000000>;
+		};
+	};
+};

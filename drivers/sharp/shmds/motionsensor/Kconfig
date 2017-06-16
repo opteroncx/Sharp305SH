@@ -1,0 +1,29 @@
+#
+# Motion sensors
+#
+menu "Motion sensors"
+
+config SENSORS_AKM8963
+	tristate "Asahi Kasei AKM8963 3-Axis Magnetometer"
+	depends on I2C
+	depends on GENERIC_GPIO
+	help
+	  Say yes here to build support for Asahi Kasei AKM8963 3-Axis
+	  Magnetometer.
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called akm8963.
+
+
+config SENSORS_LIS2DH
+	tristate "STMicroelectronics LIS2DH 3-Axis Accelerometer"
+	depends on I2C
+	depends on GENERIC_GPIO
+	help
+	  Say yes here to build support for STMicroelectronics  LIS2DH 3-Axis
+	  Accelerometer.
+
+	  To compile this driver as a module, choose M here: the module
+	  will be called lis2dh_acc.
+
+endmenu

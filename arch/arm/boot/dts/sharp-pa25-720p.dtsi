@@ -1,0 +1,302 @@
+/* Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/include/ "sharp-pa25-camera-sensor-cdp.dtsi"
+/include/ "sharp-pa25-shdisp.dtsi"
+/include/ "sharp-pa25-usb.dtsi"
+
+/ {
+	aliases {
+		spi0 = "";
+		spi3 = &blsp3_spi;
+		spi4 = &blsp4_spi;
+		spi5 = &blsp5_spi;
+/*		serial1 = &blsp1_serial;*/
+		serial2 = &blsp2_serial;
+	};
+};
+
+&soc {
+	/*---------------------*/
+	/* BLSP1 QUP0(BLSP#1)  */
+	/*---------------------*/
+	blsp1_serial: serial@f991d000 {
+		status = "disabled";
+	};
+	blsp1_i2c: i2c@f9923000 {
+		status = "ok";
+	};
+
+	/*---------------------*/
+	/* BLSP1 QUP1(BLSP#2)  */
+	/*---------------------*/
+	blsp2_serial: serial@f991e000 {
+		status = "ok";
+	};
+	blsp2_i2c: i2c@f9924000 {
+		status = "ok";
+	};
+
+	/*---------------------*/
+	/* BLSP1 QUP2(BLSP#3)  */
+	/*---------------------*/
+	blsp3_spi: spi@f9925000 {
+/*		qcom,use-bam;*/
+		qcom,gpio-cs0  = <&msmgpio 10 0>;
+		qcom,gpio-cs1  = <&msmgpio 110 0>;
+		qcom,gpio-cs2  = <&msmgpio 111 0>;
+		/* Boot Gr. 2014-10-25 temporarily modified S */
+		status = "disabled";
+		/* Boot Gr. 2014-10-25 temporarily modified E */
+	};
+
+	/*---------------------*/
+	/* BLSP1 QUP3(BLSP#4)  */
+	/*---------------------*/
+	blsp4_spi: spi@f9926000 {
+		qcom,gpio-cs0  = <&msmgpio 14 0>;
+		status = "ok";
+	};
+
+	/*---------------------*/
+	/* BLSP1 QUP4(BLSP#5)  */
+	/*---------------------*/
+	blsp5_spi: spi@f9927000 {
+		qcom,gpio-cs0  = <&msmgpio 18 0>;
+		status = "ok";
+	};
+
+	/*---------------------*/
+	/* BLSP1 QUP5(BLSP#6)  */
+	/*---------------------*/
+
+//	serial@f991f000 {
+//		status = "ok";
+//	};
+
+//	i2c@f9927000 { /* BLSP1 QUP5 */
+//		synaptics@20 {
+//			compatible = "synaptics,rmi4";
+//			reg = <0x20>;
+//			interrupt-parent = <&msmgpio>;
+//			interrupts = <17 0x2008>;
+//			vdd-supply = <&pm8226_l19>;
+//			vcc_i2c-supply = <&pm8226_lvs1>;
+//			synaptics,reset-gpio = <&msmgpio 16 0x00>;
+//			synaptics,irq-gpio = <&msmgpio 17 0x2008>;
+//			synaptics,button-map = <139 102 158>;
+//			synaptics,fw-image-name = "PR1468813.img";
+//			synaptics,i2c-pull-up;
+//			synaptics,power-down;
+//			synaptics,disable-gpios;
+//		};
+//	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		input-name = "gpio-keys";
+
+//		camera_focus {
+//			label = "camera_focus";
+//			gpios = <&msmgpio 108 0x1>;
+//			linux,input-type = <1>;
+//			linux,code = <0x210>;
+//			gpio-key,wakeup;
+//			debounce-interval = <15>;
+//		};
+
+//		camera_snapshot {
+//			label = "camera_snapshot";
+//			gpios = <&msmgpio 107 0x1>;
+//			linux,input-type = <1>;
+//			linux,code = <0x2fe>;
+//			gpio-key,wakeup;
+//			debounce-interval = <15>;
+//		};
+
+		vol_up {
+			label = "volume_up";
+			gpios = <&msmgpio 106 0x1>;
+			linux,input-type = <1>;
+			linux,code = <115>;
+			gpio-key,wakeup;
+			debounce-interval = <15>;
+		};
+
+		vol_down {
+			label = "volume_down";
+			gpios = <&msmgpio 107 0x1>;
+			linux,input-type = <1>;
+			linux,code = <114>;
+			gpio-key,wakeup;
+			debounce-interval = <15>;
+		};
+	};
+
+//	spi@f9923000 {
+//		ethernet-switch@3 {
+//			compatible = "micrel,ks8851";
+//			reg = <3>;
+//			interrupt-parent = <&msmgpio>;
+//			interrupts = <115 0x8>;
+//			spi-max-frequency = <4800000>;
+//			rst-gpio = <&msmgpio 114 0>;
+//			vdd-io-supply = <&pm8226_lvs1>;
+//			vdd-phy-supply = <&pm8226_lvs1>;
+//		};
+//	};
+
+	sound {
+		qcom,audio-routing =
+			"RX_BIAS", "MCLK",
+			"LDO_H", "MCLK",
+			"SPK_OUT", "MCLK",
+			"SPK_OUT", "EXT_VDD_SPKR",
+			"AMIC1", "MIC BIAS1 Internal1",
+			"MIC BIAS1 Internal1", "Handset Mic",
+			"AMIC2", "MIC BIAS2 External",
+			"MIC BIAS2 External", "Headset Mic",
+			"AMIC4", "MIC BIAS2 External",
+			"MIC BIAS2 External", "ANCRight Headset Mic",
+			"AMIC5", "MIC BIAS2 External",
+			"MIC BIAS2 External", "ANCLeft Headset Mic",
+			"DMIC1", "MIC BIAS1 External",
+			"MIC BIAS1 External", "Digital Mic1",
+			"DMIC2", "MIC BIAS1 External",
+			"MIC BIAS1 External", "Digital Mic2",
+			"DMIC3", "MIC BIAS3 External",
+			"MIC BIAS3 External", "Digital Mic3",
+			"DMIC4", "MIC BIAS3 External",
+			"MIC BIAS3 External", "Digital Mic4";
+
+		qcom,cdc-mclk-gpios = <&pm8226_gpios 1 0>;
+		qcom,cdc-vdd-spkr-gpios = <&pm8226_gpios 2 0>;
+		qcom,headset-jack-type-NC;
+		qcom,mbhc-audio-jack-type = "6-pole-jack";
+	};
+
+	sound-9302 {
+/* => SH_AUDIO_DRIVER 13-001 */
+		qcom,audio-routing =
+			"RX_BIAS", "MCLK",
+			"LDO_H", "MCLK",
+			"SPK_OUT", "MCLK",
+/* => SH_AUDIO_DRIVER 13-003 */
+//			"SPK_OUT", "EXT_VDD_SPKR",
+			"Lineout_1 amp", "LINEOUT1",
+			"Lineout_2 amp", "LINEOUT2",
+/* <= SH_AUDIO_DRIVER 13-003 */
+			"AMIC1", "MIC BIAS1 External",
+			"MIC BIAS1 External", "Handset Mic",
+			"AMIC2", "MIC BIAS2 External",
+			"MIC BIAS2 External", "Headset Mic",
+			"AMIC3", "MIC BIAS1 External",
+			"MIC BIAS1 External", "Secondary Mic";
+/* <= SH_AUDIO_DRIVER 13-001 */
+
+/* => SH_AUDIO_DRIVER 13-003 */
+		qcom,cdc-lineout-spkr-gpios = <&msmgpio 20 0>;
+/* <= SH_AUDIO_DRIVER 13-003 */
+		qcom,cdc-mclk-gpios = <&pm8226_gpios 1 0>;
+/* => SH_AUDIO_DRIVER 13-003 */
+//		qcom,cdc-vdd-spkr-gpios = <&pm8226_gpios 2 0>;
+/* <= SH_AUDIO_DRIVER 13-003 */
+/* => SH_AUDIO_DRIVER 13-005 */
+//		qcom,headset-jack-type-NC;
+/* <= SH_AUDIO_DRIVER 13-005 */
+	};
+};
+
+&spmi_bus {
+	qcom,pm8226@0 {
+		qcom,leds@a100 {
+			status = "okay";
+			qcom,led_mpp_2 {
+				label = "mpp";
+				linux,name = "button-backlight";
+				linux,default-trigger = "none";
+				qcom,default-state = "off";
+				qcom,max-current = <40>;
+				qcom,current-setting = <5>;
+				qcom,id = <6>;
+				qcom,mode = "manual";
+				qcom,source-sel = <1>;
+				qcom,mode-ctrl = <0x60>;
+			};
+		};
+
+		qcom,leds@a300 {
+			status = "okay";
+			qcom,led_mpp_4 {
+				label = "mpp";
+				linux,name = "green";
+				linux,default-trigger = "battery-full";
+				qcom,default-state = "off";
+				qcom,max-current = <40>;
+				qcom,current-setting = <5>;
+				qcom,id = <6>;
+				qcom,mode = "pwm";
+				qcom,pwm-us = <1000>;
+				qcom,source-sel = <8>;
+				qcom,mode-ctrl = <0x60>;
+				qcom,pwm-channel = <0>;
+				qcom,start-idx = <1>;
+				qcom,ramp-step-ms = <120>;
+				qcom,duty-pcts = [00 00 00 00 00
+						  00 00 00 00 00
+						  50 00 00 00 00
+						  00 00 00 00 00
+						  00];
+				qcom,use-blink;
+			};
+		};
+
+		qcom,leds@a500 {
+			status = "okay";
+			qcom,led_mpp_6 {
+				label = "mpp";
+				linux,name = "red";
+				linux,default-trigger = "battery-charging";
+				qcom,default-state = "off";
+				qcom,max-current = <40>;
+				qcom,current-setting = <5>;
+				qcom,id = <6>;
+				qcom,mode = "pwm";
+				qcom,pwm-us = <1000>;
+				qcom,mode-ctrl = <0x60>;
+				qcom,source-sel = <10>;
+				qcom,pwm-channel = <5>;
+				qcom,start-idx = <1>;
+				qcom,ramp-step-ms = <120>;
+				qcom,duty-pcts = [00 00 00 00 00
+						  00 00 00 00 00
+						  50 00 00 00 00
+						  00 00 00 00 00
+						  00];
+				qcom,use-blink;
+			};
+		};
+	};
+
+	qcom,pm8226@1 {
+		qcom,vibrator@c000 {
+			status = "okay";
+			qcom,vib-timeout-ms = <15000>;
+			qcom,vib-vtg-level-mV = <3100>;
+		};
+	};
+};
+
+/*****************************************/
+/*  PM8x26                               */
+/*****************************************/
+/include/ "sharp-pa25-pm8226.dtsi"
