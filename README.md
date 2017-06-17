@@ -1,2 +1,3 @@
 # Sharp305SH
-A project for gengrating Sharp 305SH overclock kernel
+A project for Sharp 305SH (S0106) overclock kernel
+
